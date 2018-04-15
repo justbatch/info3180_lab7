@@ -40,6 +40,8 @@ const Home = Vue.component('home', {
     }
 });
 
+
+
 // Define Routes
 const router = new VueRouter({
     routes: [
