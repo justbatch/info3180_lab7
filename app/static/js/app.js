@@ -14,7 +14,7 @@ Vue.component('app-header',
             <router-link class="nav-link" to="/">Home <span class="sr-only">(current)</span></router-link>
           </li>
            <li class="nav-item active">
-            <router-link class="nav-link" to="/api/upload">Upload <span class="sr-only">(current)</span></router-link>
+            <router-link class="nav-link" to="/api/upload"> Upload <span class="sr-only">(current)</span></router-link>
           </li>
         </ul>
       </div>
@@ -66,29 +66,38 @@ const Upload = Vue.component('upload-form',
    `,
    
    methods:
-    
    {
-       uploadPhoto: function(){
-       fetch("/api/upload",
+       uploadPhoto: function()
        {
-           method: 'POST'
-       })
-       .then
-       
-       (function (response)
-       {
-           return response.json();     
-       }).then
-       
-       (function (jsonResponse)
-       {
-           console.log(jsonResponse);
-       }).catch
-       
-       (function (error)
-       {
-           console.log(error);
-       }); 
+           let uploadForm = document.getElementById('uploadForm'); 
+           let form_data = new FormData(uploadForm);
+           
+           fetch("/api/upload",
+           {
+               method: 'POST',
+               body: form_data,
+               headers:
+               {
+                   'X-CSRFToken': token
+               },
+               credentials: 'same-origin'
+           })
+           .then
+           
+           (function (response)
+           {
+               return response.json();     
+           }).then
+           
+           (function (jsonResponse)
+           {
+               console.log(jsonResponse);
+           }).catch
+           
+           (function (error)
+           {
+               console.log(error);
+           }); 
       }
    }
 });
