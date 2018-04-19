@@ -21,7 +21,7 @@ def index():
     """Render website's initial page and let VueJS take over."""
     return render_template('index.html')
 
-@app.route('/api/upload', methods=['GET, POST'])
+@app.route('/api/upload', methods=['GET','POST'])
 def upload():
     forms = UploadForm()
     if request.methods == 'POST':
@@ -32,7 +32,9 @@ def upload():
             filename = secure_filename(photo.filename)
             photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             
-            return jsonify({ "message": "File Upload Successful", "filename": photo, "description": description })
+            json = jsonify({ "message": "File Upload Successful", "filename": filename, "description": description })
+            
+            return json
             
     error = form_errors(forms)
     return jsonify({"errors": error})
